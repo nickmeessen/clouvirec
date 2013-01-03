@@ -1,0 +1,339 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    font-family: Helvetica, 'Courier New', sans-serif;
+    letter-spacing: 1px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html, body {
+    background: url('<%= asset_path 'bg.png' %>') #FAFAFA;
+    width: 100%;
+    height: 100%;
+}
+
+#title {
+    display: none;
+}
+
+#header {
+    margin-top: 40px;
+    margin-left: 20px;
+    width: 331px;
+    height: 91px;
+    display: inline-block;
+}
+
+#footer {
+    margin-top: 50px;
+    margin-bottom: 100px;
+    width: 100%;
+    text-align: center;
+    text-transform: lowercase;
+    font-size: 8pt;
+}
+
+#addShow {
+    float: right;
+    margin: 40px;
+    height: 50px;
+}
+
+#addShowButton {
+    cursor: pointer;
+}
+
+#viewport {
+
+}
+
+#loader {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    margin-left: -175px;
+    width: 350px;
+    height: 100px;
+}
+
+#overlay {
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: url('<%= asset_path 'bg.png' %>') #FAFAFA;
+}
+
+#progressBar {
+    background-color: #d3d3d3;
+    width: 100%;
+    height: 4px;
+}
+
+#progress {
+    background-color: #a9a9a9;
+    width: 0%;
+    height: 4px;
+}
+
+#progressText {
+    font-size: 10pt;
+    margin: 0 auto;
+    text-align: center;
+    width: 70%;
+    padding: 10px;
+}
+
+#mainView {
+
+    margin: 0 auto;
+    display: none;
+    color: #333333;
+    width: 90%;
+    font-size: 10pt;
+    letter-spacing: 1px;
+    line-height: 12pt;
+    text-align: justify;
+}
+
+.viewHeader {
+    color: #666;
+    font-size: 18pt;
+    text-transform: uppercase;
+    text-align: right;  
+    padding: 20px 10px 10px 10px;
+}
+
+.weekday {
+    text-align: right;
+    font-weight: bold;
+    border-right: 1px solid #D3D3D3;
+    white-space: nowrap;
+    background: url('<%= asset_path 'bg.png' %>') #FAFAFA;
+}
+
+table { border-collapse: collapse; border-spacing: 0; width: 100%; }  
+
+.tableHeader {
+    padding: 5px;
+    font-size: 8pt;
+    line-height: 8pt;
+    text-transform: uppercase;
+    text-shadow: #000 0 1px 0;
+}
+
+#upcomingView, #recentView {
+    border: 1px dashed #D3D3D3;
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#upcomingView th, #recentView th { 
+    background-color: #E0E0E0;
+    font-weight: bold;
+}
+
+#upcomingView th, td, #recentView th, td {
+    padding: 5px;
+}
+
+.description { 
+    padding: 5px;
+    font-size: 8pt; 
+    letter-spacing: 0px;
+    text-align: justify;
+}
+
+#showView {
+    border: 1px dashed #D3D3D3;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.showView {
+    display: inline-block;
+    background-color: #4D4D4D;
+    color: #FFF;
+    text-align: left;
+    font-size: 10pt;
+    /*width: 230px;*/
+    border: 10px solid #FAFAFA;
+}
+
+.showPoster {
+    width: 100%;
+    height: 100%;
+    max-width: 230px;
+    max-height: 338px;
+    border: 1px solid #606060;
+    cursor: pointer;
+}
+
+.showLoading {
+    background-image: url('<%= asset_path 'loader2.gif' %>');
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    min-width: 230px;
+    min-height: 338px;
+}
+
+#addView {
+    padding: 10px;
+    text-align: center;
+    border: 1px dashed #D3D3D3;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#searchView {
+    display: inline-block;
+    text-align: right;
+    border: 1px solid #D3D3D3;
+    background-color: #F2F2F2;
+    margin: 10px;
+    width: 80%;
+}
+
+#searchImage {
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    margin: 8px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+#searchField {
+    padding: 0px;
+    margin: 8px;
+    display: inline-block;
+    width: 90%;
+    height: 26px;
+    font-size: 14pt;
+    border: 0px;
+    background-color: #F2F2F2;
+    outline: none;   
+    color: #606060;
+    vertical-align: middle;
+}
+
+#searchResults {
+    text-align: left;
+    background-color: #F2F2F2;
+    border: 1px solid #D3D3D3;
+    width: 80%;
+    font-size: 10pt;
+    line-height: 12pt;
+    margin: 0 auto;
+}
+
+#searchResults th { 
+    background-color: #E0E0E0;
+    font-weight: bold;
+}
+
+#searchResults th, td {
+    padding: 5px;
+}
+
+
+.showSidebar {
+    display: inline-block;
+}
+
+.showControl {
+    text-shadow: #000 0 1px 0;
+    text-align: right;
+    line-height: 18pt;
+    padding-right: 5px;
+    display: none;
+}
+
+.showControl a {
+    cursor: pointer;
+}
+
+.episodeView {
+    /*display: inline-block;*/
+    /*overflow-x: hidden;*/
+    /*overflow-y: scroll;*/
+    overflow: auto;
+    height: 360px;
+    margin: 2px;
+    border: 1px solid #4D4D4D;
+}
+
+.episodeNumber {
+    width: 30px;
+    border-right: 1px solid #CECECE;
+    text-align: center;
+    font-weight: bold;
+    background-color: #E7E7E7;
+}
+
+.downloadLink {
+    color: #333;
+    font-weight: bold;
+}
+
+.button {
+    text-align: right;
+    padding-right: 10px;
+}
+
+.statusClass {
+    text-align: right;
+    white-space: nowrap;
+    font-size: 8pt; 
+    letter-spacing: 0px;
+}
+
+.trackingLink {
+    color: #009900;
+    font-weight: auto;
+}
+
+.greenText sup {
+    color: #009900;
+    font-size: 8pt;
+}
+
+.redText sup {
+    color: #DC143C;
+    font-size: 8pt;
+}
+
+.blueText sup {
+    color: #006399;
+    font-size: 8pt;
+}
+
+.episodeList {
+    text-align: left;
+    background-color: #F2F2F2;
+    font-size: 10pt;
+    line-height: 12pt;
+    color: #333333;
+    display: none;
+}
+
+.episodeList .description {
+    background-color: #FFF;
+}
+
+.episodeList th { 
+    background-color: #CECECE;
+    font-weight: bold;
+}
+
+.episodeList th, td {
+    padding: 5px;
+}

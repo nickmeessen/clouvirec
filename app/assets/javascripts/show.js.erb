@@ -1,0 +1,266 @@
+/**
+ Clouvirec show.js
+ Copyright (c) 2011-2013 NickMeessen.nl
+ Created by Nick Meessen (http://nickmeessen.nl)
+ */
+
+ var Show = function(id, data) { 
+
+ 	var preloaded = false
+ 	var expanded = 0
+	var tvdbid = id
+	var seasons = data.seasons
+	var next_episode = data.next_episode
+	var state = data.state
+	var sideBar = $('<div>').addClass('showSidebar')
+
+	var untrackLink = $('<a>').html("Untrack").click(function() {
+		new Messi('Are you sure you want to untrack this show?<br />You won\t be notified about this show again.', {title: 'Untrack Show', titleClass: 'anim warning', modal: true, buttons: [{id: 0, label: 'Yes', val: 'Y', btnClass: 'btn-success'}, {id: 1, label: 'No', val: 'N', btnClass: 'btn-danger'}], callback: function(val) { removeShow(val) }});
+	})
+
+	var closeView = $('<a>').html("Close").click(expandShow)
+
+	var showControl = $('<div>').addClass('showControl').append(untrackLink).append(" | ").append(closeView)
+
+	var episodeList = $('<table>').attr('class', "episodeList")
+	var episodeView = $('<div>').addClass('episodeView').append(episodeList)
+	var showView = $('<div>').css('width', "230px").css('margin', "2px").css('display', "inline-block").css('vertical-align', "top")
+	var showPoster = $('<div>').html($('<img>').attr('src', "<%= asset_path 'showLoading.png' %>")).addClass('showLoading').addClass('showPoster')
+
+	showView.append($('<div>').append(showPoster))
+	showView.append($('<div>').html("Number of Seasons: " + seasons).addClass('tableHeader'))
+	if ((state != "Ended") && (next_episode > 0) && (next_episode != "N/A")) {
+		showView.append($('<div>').html("Next Episode airs in " + next_episode + " days..").addClass('tableHeader'))
+	} else if (state == "Ended") {
+		showView.append($('<div>').html("Show stopped airing.").addClass('tableHeader'))
+	} else if (next_episode == 0) {
+		showView.append($('<div>').html("Next Episode tomorrow!").addClass('tableHeader'))
+	} else {
+		showView.append($('<div>').html("Next Airdate unknown..").addClass('tableHeader'))
+	}
+
+	sideBar.append(showControl).append(episodeView)
+
+	this.element = $('<div>').attr('id', id).addClass('showView')
+	this.element.append(showView).append(sideBar)
+
+	var dlButton = new Image()
+	var reqButton = new Image()
+
+	dlButton.src = "<%= asset_path 'download.png' %>"
+	reqButton.src = "<%= asset_path 'request.png' %>"
+
+ 	var showLoading1 = new Image()
+ 	var showLoading2 = new Image()
+
+ 	showLoading1.src = "<%= asset_path 'showLoading.png' %>"
+
+ 	showLoading1.onload = function() {
+	 	showLoading2.src = "<%= asset_path 'loader2.gif' %>"
+	 	showLoading2.onload = function() {
+ 			fetchSeason(seasons)
+	 	}
+ 	}
+
+	function fetchSeason(season) {
+
+		$.get("/episodes/" + tvdbid + "/" + season,
+
+			function(data) {
+
+				if (data.length == 0) {
+
+					var ss = season - 1
+
+					if (ss != 0) {
+						fetchSeason(ss)
+					} else {
+
+					 	var posterImage = new Image()
+
+						posterImage.src = "/shows/" + tvdbid + "/poster"
+						posterImage.onload = function() { 
+
+							preloaded = true
+							showPoster.replaceWith($('<div>').html($('<img>').attr('src', "/shows/" + tvdbid + "/poster").addClass('showPoster')).click(expandShow))
+
+						}
+
+					}
+
+					return
+					
+				}
+
+				episodeList.append($('<tr>').append($('<th>').attr('colspan', 3).html(":: Season " + data[0].season)))
+
+				for (var ep in data) {
+
+					if (!data[ep]) { continue }
+
+					if (data[ep].status == "Avaliable") {
+						button = $('<a>').append($('<%= image_tag("download.png") %>').attr('id', data[ep].id)).attr('href', "/episodes/" + tvdbid + "/" + data[ep].season + "/" + data[ep].number)
+						statusClass = "greenText statusClass"
+					} else if (data[ep].status == "Requested") {
+						button = $('<a>').attr('id', data[ep].id)
+						statusClass = "blueText statusClass"
+					} else if (data[ep].status != "Unaired") {
+						button = $('<a>').append($('<%= image_tag("request.png") %>').attr('id', data[ep].id)).attr('href', "/episodes/" + tvdbid + "/" + data[ep].season + "/" + data[ep].number + "/request").click(requestEpisode)
+						statusClass = "redText statusClass"
+					} else if (data[ep].status == "Aired") {
+						statusClass = "greenText statusClass"
+						button = null
+					} else if (data[ep].status == "Unavaliable") {
+						button = $('<a>').append($('<%= image_tag("request.png") %>').attr('id', data[ep].id)).attr('href', "/episodes/" + tvdbid + "/" + data[ep].season + "/" + data[ep].number + "/request").click(requestEpisode)
+						statusClass = "redText statusClass"
+					} else {
+						button = null
+						statusClass = "redText statusClass"
+					}
+
+					var d = new Date(data[ep].airdate)
+					var m = new Array()
+					m[0]="January"
+					m[1]="February"
+					m[2]="March"
+					m[3]="April"
+					m[4]="May"
+					m[5]="June"
+					m[6]="July"
+					m[7]="August"
+					m[8]="September"
+					m[9]="October"
+					m[10]="November"
+					m[11]="December"
+
+					airdate = d.getDate() + " " + m[d.getMonth()] + " " + d.getFullYear()
+
+					episodeList.append($('<tr>')
+							.append($('<td>').html(data[ep].number).addClass('episodeNumber'))
+							.append($('<td>').html(data[ep].title))
+							.append($('<td>').html("<sup id=\"status" + data[ep].id + "\">" + data[ep].status + "</sup><br />" + airdate).addClass(statusClass))
+						)
+
+					if (button) {
+
+						episodeList.append($('<tr>')
+							.append($('<td>').attr('colspan', 2).addClass('description').html(data[ep].description))
+							.append($('<td>').addClass('button').addClass('description').append(button))
+						)
+
+					} else {
+
+						episodeList.append($('<tr>')
+							.append($('<td>').attr('colspan', 3).addClass('description').html(data[ep].description))
+							)
+					}
+				}
+
+				var ss = season - 1
+
+				if (ss != 0) {
+					fetchSeason(ss)
+				} else {
+
+				 	var posterImage = new Image()
+
+					posterImage.src = "/shows/" + tvdbid + "/poster"
+					posterImage.onload = function() { 
+
+						preloaded = true
+						showPoster.replaceWith($('<div>').html($('<img>').attr('src', "/shows/" + tvdbid + "/poster").addClass('showPoster')).click(expandShow))
+
+					}
+
+				}
+		})
+
+	}
+
+	function expandShow() {
+
+		if (expanded) {
+
+			episodeList.hide()
+			showControl.hide()
+
+			showControl.css('width', "auto")
+			episodeView.css('width', "auto")
+
+			expanded = 0
+
+		} else {
+				
+			var w = ($('#showView').innerWidth() - 280)
+
+			showControl.css('width', w + "px")
+			episodeView.css('width', w + "px")
+
+			showControl.fadeIn('fast')
+			episodeList.fadeIn('fast')
+
+			expanded = 1
+
+		}
+
+		$.scrollTo( $('#' + tvdbid), 0 )
+
+
+		// fucked up overflow >_>
+		// episodeView.animate({width: w + "px"}, 'slow', function() {
+		// 	episodeList.fadeIn('slow')
+		// })
+	}
+
+	function removeShow(val) {
+
+		if (val == "Y") {
+
+			$.post("/shows/" + tvdbid + "/untrack", function(data) {
+					
+				if (data == "success") {
+
+					$('#' + tvdbid).remove()
+
+				} else {
+					new Messi('Something went wrong, please try again or contact me :)', { modal: true, title: 'Error', titleClass: 'anim error', buttons: [{id: 0, label: 'OK', val: 'X'}]});
+				}
+
+			})
+		}
+	}
+
+	function requestEpisode(event) {
+
+		event.preventDefault()
+
+		var target = event.target || event.srcElement
+
+		if (target.nodeName == "IMG") {
+
+			var url = $(target.parentNode).attr('href')
+
+		} else {
+			var url = $(target).attr('href')
+		}
+
+		$.post(url,
+
+		function(data) {
+			
+			$('#status' + target.id).parent().removeClass('redText').addClass('blueText')
+			$('#status' + target.id).html("Requested")
+
+			if (data == "success") {
+
+				new Messi('Episode is requested! You will be notified when it\'s avaliable :)', {modal: true, titleClass: 'info', buttons: [{id: 0, label: 'OK', val: 'X'}]});
+
+				$(target).fadeOut()
+			} else {
+				new Messi('Something went wrong, please try again or contact me :)', { title: 'Error', modal: true, titleClass: 'anim error', buttons: [{id: 0, label: 'OK', val: 'X'}]});
+			}
+
+		})
+	}
+
+}

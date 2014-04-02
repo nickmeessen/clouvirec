@@ -28,7 +28,7 @@ var showView = function(loader) {
 
             view.empty();
 
-            data = JSON.parse(data);
+            data = JSON.parse(JSON.stringify(data));
 
             if (data.length === 0) {
 

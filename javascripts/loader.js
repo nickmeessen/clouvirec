@@ -1,0 +1,56 @@
+/**
+ Clouvirec loader.js
+ Copyright (c) 2011-2013 NickMeessen.nl
+ Created by Nick Meessen (http://nickmeessen.nl)
+ */
+
+var Loader = function(overlay) {
+
+    var loadedImages = 1;
+    var totalImages = 1;
+    var callsDone = 1;
+    var totalCalls = 1;
+
+    this.element = $('<div>').attr('id', "loader");
+
+    var title = $('<div>').css('text-align', 'center').css('height', '91px').append('<img src="images/title.png">').append('<img src="images/blink.gif">');
+    var progressBar = $('<div>').attr('id', "progress");
+    var progressBarC = $('<div>').attr('id', "progressBar").append(progressBar);
+    var progressText = $('<div>').attr('id', "progressText");
+
+    this.element.append(title).append(progressBarC).append(progressText);
+
+    // preload all images, hooks in all functions etc.
+
+    this.updateProgress = function(progress, text) {
+
+        // preload standard images.
+        // after standard images are loaded, call refreshies.
+
+        // recentView.refresh()
+        // upcomingView.refresh()
+        // showView.refresh()
+
+
+        pc = Math.floor(Math.random() * ((progress + 5) - (progress - 5) + 1) + (progress - 5));
+
+        progressText.html('(' + pc + '%) ' + text);
+        progressBar.css('width', pc + '%');
+    };
+
+    this.finish = function() {
+
+        progressBar.css('width', '100%');
+        progressText.html('(100%) Done!');
+
+        overlay.fadeOut('slow');
+
+        this.element.fadeOut('slow', function() {
+            $('#title').show();
+            $('#mainView').show();
+        });
+    };
+
+
+
+};

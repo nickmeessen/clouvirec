@@ -1,44 +1,142 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Clouvirec by nickmeessen</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Clouvirec</h1>
-        <p>Clouvirec - Recording your favourite TV Shows in the Cloud. </p>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 
-        <p class="view"><a href="https://github.com/nickmeessen/clouvirec">View the Project on GitHub <small>nickmeessen/clouvirec</small></a></p>
+<head>
 
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 
-        <ul>
-          <li><a href="https://github.com/nickmeessen/clouvirec/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/nickmeessen/clouvirec/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/nickmeessen/clouvirec">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h1>
-<a name="clouvirec" class="anchor" href="#clouvirec"><span class="octicon octicon-link"></span></a>clouvirec</h1>
+    <!-- Nick, Meessen -->
 
-<p>Clouvirec - Recording your favourite TV Shows in the Cloud.</p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/nickmeessen">nickmeessen</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
-  </body>
+<link href="stylesheets/clouvirec.css?body=1" media="screen" rel="stylesheet" type="text/css" />
+<link href="stylesheets/messi.min.css?body=1" media="screen" rel="stylesheet" type="text/css" />
+<link href="stylesheets/tinyscrollbar.css?body=1" media="screen" rel="stylesheet" type="text/css" />
+  	<script src="javascripts/jquery.js?body=1" type="text/javascript"></script>
+<script src="javascripts/jquery_ujs.js?body=1" type="text/javascript"></script>
+<script src="javascripts/addView.js?body=1" type="text/javascript"></script>
+<script src="javascripts/clouvirec.js?body=1" type="text/javascript"></script>
+<script src="javascripts/jquery.scrollTo.min.js?body=1" type="text/javascript"></script>
+<script src="javascripts/jquery.tinyscrollbar.min.js?body=1" type="text/javascript"></script>
+<script src="javascripts/loader.js?body=1" type="text/javascript"></script>
+<script src="javascripts/messi.min.js?body=1" type="text/javascript"></script>
+<script src="javascripts/recentView.js?body=1" type="text/javascript"></script>
+<script src="javascripts/show.js?body=1" type="text/javascript"></script>
+<script src="javascripts/showView.js?body=1" type="text/javascript"></script>
+<script src="javascripts/upcomingView.js?body=1" type="text/javascript"></script>
+
+<style type="text/css">
+body {
+    padding: 0;
+}
+
+#alert {
+    position: relative;
+}
+
+.alert {
+    background-color: #c4453c;
+    background-image: -webkit-linear-gradient(135deg, transparent,
+                      transparent 25%, hsla(0,0%,0%,.05) 25%,
+                      hsla(0,0%,0%,.05) 50%, transparent 50%,
+                      transparent 75%, hsla(0,0%,0%,.05) 75%,
+                      hsla(0,0%,0%,.05));
+    background-image: -moz-linear-gradient(135deg, transparent,
+                      transparent 25%, hsla(0,0%,0%,.1) 25%,
+                      hsla(0,0%,0%,.1) 50%, transparent 50%,
+                      transparent 75%, hsla(0,0%,0%,.1) 75%,
+                      hsla(0,0%,0%,.1));
+    background-image: -ms-linear-gradient(135deg, transparent,
+                      transparent 25%, hsla(0,0%,0%,.1) 25%,
+                      hsla(0,0%,0%,.1) 50%, transparent 50%,
+                      transparent 75%, hsla(0,0%,0%,.1) 75%,
+                      hsla(0,0%,0%,.1));
+    background-image: -o-linear-gradient(135deg, transparent,
+                      transparent 25%, hsla(0,0%,0%,.1) 25%,
+                      hsla(0,0%,0%,.1) 50%, transparent 50%,
+                      transparent 75%, hsla(0,0%,0%,.1) 75%,
+                      hsla(0,0%,0%,.1));
+    background-image: linear-gradient(135deg, transparent,
+                      transparent 25%, hsla(0,0%,0%,.1) 25%,
+                      hsla(0,0%,0%,.1) 50%, transparent 50%,
+                      transparent 75%, hsla(0,0%,0%,.1) 75%,
+                      hsla(0,0%,0%,.1));
+    background-size: 20px 20px;
+    box-shadow: 0 5px 0 hsla(0,0%,0%,.1);
+    color: #f6f6f6;
+    display: block;
+    font: bold 16px/40px sans-serif;
+    height: 40px;
+    position: absolute;
+    text-align: center;
+    text-decoration: none;
+    top: -45px;
+    width: 100%;
+    -webkit-animation: alert 1s ease forwards;
+       -moz-animation: alert 1s ease forwards;
+        -ms-animation: alert 1s ease forwards;
+         -o-animation: alert 1s ease forwards;
+            animation: alert 1s ease forwards;
+}
+
+/* Animation */
+
+@-webkit-keyframes alert {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { top: 0; }
+}
+@-moz-keyframes alert {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { top: 0; }
+}
+@-ms-keyframes alert {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { top: 0; }
+}
+@-o-keyframes alert {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { top: 0; }
+}
+@keyframes alert {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { top: 0; }
+}
+
+</style>
+
+    <title> Clouvirec :: Tracking your favourite TV Shows!</title>
+
+</head>
+<body>
+
+  <div id="alert">
+    <span class="alert">This is a (non-functioning) demo page for this repo : <a href="https://github.com/nickmeessen/clouvirec" style="color: #FFF;">https://github.com/nickmeessen/clouvirec</a> </span>
+  </div>
+
+	<div id="viewport">
+
+	    <div id="title">
+
+	    	<img alt="Header" id="header" src="images/header.png" />
+
+	    	<div id="addShow">
+	    		<img alt="Addshow" id="addShowButton" src="images/addshow.png" />
+	    	</div>
+	    </div>
+
+		<noscript>
+    <strong>
+        This application needs Javascript enabled, please enable it. Or
+        use another (newer) browser!
+    </strong>
+</noscript>
+
+	</div>
+
+</body>
 </html>

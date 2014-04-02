@@ -1,0 +1,62 @@
+/**
+ Clouvirec showView.js
+ Copyright (c) 2011-2013 NickMeessen.nl
+ Created by Nick Meessen (http://nickmeessen.nl)
+ */
+
+var showView = function(loader) {
+
+    var shows = [];
+    var view = $('<div>').attr('id', "showView");
+
+    this.element = view;
+
+    this.checkShow = function(showid) {
+
+        if (shows[showid]) {
+            return true;
+        } else {
+            return false;
+        }
+
+
+    };
+
+    this.refresh = function() {
+
+        var sv = $.get("shows/index.json", function(data) {
+
+            view.empty();
+
+            data = JSON.parse(data);
+
+            if (data.length === 0) {
+
+                view.append($('<div>').html("You aren't tracking any shows yet.."));
+
+            } else {
+
+                for (var sid in data) {
+
+                    show = new Show(data[sid].tvdbid, data[sid]);
+
+                    shows[data[sid].tvdbid] = show;
+                    view.append(show.element);
+
+                }
+
+
+            }
+        });
+
+        sv.error(function() {
+            new Messi('Clouvirec\'s database seems to be unreachable :( <br /><br />Please refresh to try again, or feel free to contact me to fix it!', {
+                modal: true,
+                title: 'Error',
+                titleClass: 'anim error',
+                closeButton: false
+            });
+        });
+
+    };
+};

@@ -105,9 +105,7 @@ var addView = function() {
                 }, 'fast');
             });
 
-            $.post("shows/search.json", {
-                    searchTerm: searchField.val()
-                },
+            $.get("shows/search.json",
 
                 function(data) {
 

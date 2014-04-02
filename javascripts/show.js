@@ -85,7 +85,7 @@ var Show = function(id, data) {
 
             function(data) {
 
-                data = JSON.parse(data);
+                data = JSON.parse(JSON.stringify(data));
 
                 var ss;
 

@@ -16,7 +16,7 @@ var upcomingView = function(loader) {
 
         var uv = $.get("shows/upcoming.json", function(data) {
 
-            data = JSON.parse(data);
+            data = JSON.parse(JSON.stringify(data));
 
             upcomingList.empty();
 

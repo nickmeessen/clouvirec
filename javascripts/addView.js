@@ -111,7 +111,7 @@ var addView = function() {
 
                 function(data) {
 
-                  data = JSON.parse(data);
+                  data = JSON.parse( JSON.stringify(data) );
 
                     loadingImg.animate({
                         opacity: 0
